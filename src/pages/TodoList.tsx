@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
+import { Todo } from "../components/Todo";
 import { ITodo } from "../interfaces/todolist";
 
 export const TodoList: React.FC = () => {
-  const todoArr: ITodo[] = [
+
+  const [todoArr, setTodoArr] = useState<ITodo[]>([
     {
       title: "Go to gym",
       description: "You need to be realy powerful !",
@@ -18,16 +20,14 @@ export const TodoList: React.FC = () => {
       description: "You need to be fine !",
       isDone: false,
     },
-  ];
+  ])
 
   return (
     <>
       <div className="todo_list">
         <ol>
           {todoArr.map((el, idx) => (
-            <li
-              key={idx}
-            >{`Activity name: ${el.title}, Activity description: ${el.description}, isDone: ${el.isDone}`}</li>
+            <Todo todo={el} idx={idx} />
           ))}
         </ol>
       </div>
