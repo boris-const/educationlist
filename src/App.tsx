@@ -1,12 +1,13 @@
 import React from "react";
 import { Navbar } from "./components/Navbar";
+import { TodoList } from "./pages/TodoList";
 
 const App = () => {
   return (
     <>
       <Navbar />
       <div className="container">
-        <h1>Hellow world</h1>
+        <TodoList />
       </div>
     </>
   );
