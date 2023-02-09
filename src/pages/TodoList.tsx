@@ -1,4 +1,3 @@
-import { title } from "process";
 import React, { useEffect, useState } from "react";
 import { Modal } from "../components/Modal/Modal";
 
@@ -27,7 +26,7 @@ export const TodoList: React.FC = () => {
   const createTodo = async (title: string, description: string) => {
     const url = "http://localhost:3100/postTodo";
     try {
-      const response = await fetch(url, {
+      await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -71,7 +70,7 @@ export const TodoList: React.FC = () => {
   const toggleState = async (id: number, isDoneValue: boolean) => {
     const url = `http://localhost:3100/patchTodo/${id}`;
     try {
-      const response: Response = await fetch(url, {
+      await fetch(url, {
         // mode: "cors",
         method: "PATCH",
         headers: {
@@ -79,7 +78,6 @@ export const TodoList: React.FC = () => {
         },
         body: JSON.stringify({ isDone: !isDoneValue }),
       });
-      const ans = await response.json();
       getTodoList();
     } catch (error) {
       console.log(error);
@@ -89,7 +87,7 @@ export const TodoList: React.FC = () => {
   const patchTodo = async (id: number, title: string, description: string) => {
     const url = `http://localhost:3100/patchTodo/${id}`;
     try {
-      const response: Response = await fetch(url, {
+      await fetch(url, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -108,7 +106,18 @@ export const TodoList: React.FC = () => {
   const deleteTodo = async (id: number) => {
     const url = `http://localhost:3100/deleteTodo/${id}`;
     try {
-      const response = await fetch(url, {
+      await fetch(url, {
+        method: "DELETE",
+      });
+      getTodoList();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const deleteAllTodo = async () => {
+    const url = "http://localhost:3100/deleteTodos";
+    try {
+      await fetch(url, {
         method: "DELETE",
       });
       getTodoList();
@@ -189,7 +198,12 @@ export const TodoList: React.FC = () => {
           >
             ADD
           </button>
-          <button style={{ marginLeft: "40px" }}>DELETE ALL</button>
+          <button
+            onClick={() => deleteAllTodo()}
+            style={{ marginLeft: "40px" }}
+          >
+            DELETE ALL
+          </button>
         </div>
 
         <Modal modalActive={modalActive} setModalActive={setModalActive}>
