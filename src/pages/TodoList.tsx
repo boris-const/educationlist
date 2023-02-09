@@ -20,6 +20,9 @@ export const TodoList: React.FC = () => {
   const [modalActiveTwo, setModalActiveTwo] = useState<boolean>(false);
   const [changeTitle, setChangeTitle] = useState<string>("");
   const [changeDesc, setChangeDesc] = useState<string>("");
+  const [changeId, setChangeId] = useState<number>(0);
+
+  const [searchId, setSearchId] = useState<string>("");
 
   const createTodo = async (title: string, description: string) => {
     const url = "http://localhost:3100/postTodo";
@@ -51,6 +54,20 @@ export const TodoList: React.FC = () => {
     }
   };
 
+  const getTodo = async (id: string) => {
+    const numId = parseFloat(id);
+    // console.log(`Value: ${numId}, type of value: ${typeof numId}`)
+    const url = `http://localhost:3100/getTodo/${numId}`;
+    try {
+      const response = await fetch(url);
+      const { data } = await response.json();
+      // console.log(data)
+      setTodoArr(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const toggleState = async (id: number, isDoneValue: boolean) => {
     const url = `http://localhost:3100/patchTodo/${id}`;
     try {
@@ -69,8 +86,23 @@ export const TodoList: React.FC = () => {
     }
   };
 
-  const updateTodo = (id: number, title: string, description: string): void => {
-    console.log(id, title, description);
+  const patchTodo = async (id: number, title: string, description: string) => {
+    const url = `http://localhost:3100/patchTodo/${id}`;
+    try {
+      const response: Response = await fetch(url, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: title,
+          description: description,
+        }),
+      });
+      getTodoList();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const deleteTodo = async (id: number) => {
@@ -85,7 +117,19 @@ export const TodoList: React.FC = () => {
     }
   };
 
-  const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const changeSearchHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const target = event.target;
+    const value = target.value;
+    setSearchId(value);
+  };
+
+  const submitSearchHendler = async (event: React.FormEvent) => {
+    event.preventDefault();
+    await getTodo(searchId);
+    setSearchId("");
+  };
+
+  const changeAddTodoHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const target = event.target;
     const name = target.name;
     const value = target.value;
@@ -97,7 +141,7 @@ export const TodoList: React.FC = () => {
     }
   };
 
-  const submitHandler = async (event: React.FormEvent) => {
+  const submitAddTodoHandler = async (event: React.FormEvent) => {
     event.preventDefault();
     await createTodo(newTodoTitle, newTodoDesc);
     setNewTodoTitle("");
@@ -115,22 +159,28 @@ export const TodoList: React.FC = () => {
     if (name === "description") {
       setChangeDesc(value);
     }
-  }
+  };
 
-  const changeSubmitHandler = async (event:  React.FormEvent) => {
+  const changeSubmitHandler = async (event: React.FormEvent) => {
     event.preventDefault();
-    await createTodo(changeTitle, changeDesc);
+    // await createTodo(changeTitle, changeDesc);
+    await patchTodo(changeId, changeTitle, changeDesc);
     setNewTodoTitle("");
     setNewTodoDesc("");
-    setModalActive(false);
-  }
+    setChangeId(0);
+    setModalActiveTwo(false);
+  };
 
   return (
     <>
       <div className="todo_list">
         <div className="menu" style={{ display: "flex" }}>
-          <form action="GET">
-            <input type="search" />
+          <form action="GET" onSubmit={submitSearchHendler}>
+            <input
+              type="number"
+              value={searchId || ""}
+              onChange={changeSearchHandler}
+            />
             <input type="submit" />
           </form>
           <button
@@ -141,22 +191,22 @@ export const TodoList: React.FC = () => {
           </button>
           <button style={{ marginLeft: "40px" }}>DELETE ALL</button>
         </div>
-        
+
         <Modal modalActive={modalActive} setModalActive={setModalActive}>
-          <form action="#" onSubmit={submitHandler}>
+          <form action="#" onSubmit={submitAddTodoHandler}>
             <input
               name="title"
               type="text"
               value={newTodoTitle || ""}
               style={{ display: "block", marginTop: "5px" }}
-              onChange={changeHandler}
+              onChange={changeAddTodoHandler}
             />
             <input
               name="description"
               type="text"
               value={newTodoDesc || ""}
               style={{ display: "block", marginTop: "5px" }}
-              onChange={changeHandler}
+              onChange={changeAddTodoHandler}
             />
             <button
               type="submit"
@@ -191,17 +241,19 @@ export const TodoList: React.FC = () => {
             </button>
           </form>
         </Modal>
+
         <ol>
           {todoArr.map((el, idx) => (
             <Todo
               key={idx}
               todo={el}
               toggleState={toggleState}
-              updateTodo={updateTodo}
+              updateTodo={patchTodo}
               deleteTodo={deleteTodo}
               setModalActiveTwo={setModalActiveTwo}
               setChangeTitle={setChangeTitle}
               setChangeDesc={setChangeDesc}
+              setChangeId={setChangeId}
             />
           ))}
         </ol>

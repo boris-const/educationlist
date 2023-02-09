@@ -9,6 +9,7 @@ type TodoProps = {
   setModalActiveTwo: React.Dispatch<React.SetStateAction<boolean>>;
   setChangeTitle: React.Dispatch<React.SetStateAction<string>>;
   setChangeDesc: React.Dispatch<React.SetStateAction<string>>;
+  setChangeId: React.Dispatch<React.SetStateAction<number>>;
 };
 
 export const Todo: React.FC<TodoProps> = ({
@@ -18,6 +19,7 @@ export const Todo: React.FC<TodoProps> = ({
   setModalActiveTwo,
   setChangeTitle,
   setChangeDesc,
+  setChangeId,
 }) => {
   return (
     <li>
@@ -26,13 +28,14 @@ export const Todo: React.FC<TodoProps> = ({
         checked={todo.isDone}
         onChange={() => toggleState(todo.id, todo.isDone)}
       />{" "}
-      <span>{`Activity name: ${todo.title}, Activity description: ${todo.description}`}</span>{" "}
+      <span>{`Activity ID: ${todo.id}, Activity name: ${todo.title}, Activity description: ${todo.description}`}</span>{" "}
       {/* Стили зачёркивания для true */}
       <button
         className="update"
         onClick={() => {
           setChangeTitle(todo.title);
           setChangeDesc(todo.description);
+          setChangeId(todo.id);
           setModalActiveTwo(true);
         }}
       >
