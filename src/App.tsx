@@ -2,7 +2,7 @@ import React from "react";
 import { Navbar } from "./components/Navbar";
 import { TodoList } from "./pages/TodoList";
 
-const App = () => {
+const App: React.FC = () => {
   return (
     <>
       <Navbar />

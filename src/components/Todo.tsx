@@ -3,19 +3,46 @@ import { ITodo } from "../interfaces/todolist";
 
 type TodoProps = {
   todo: ITodo;
-  idx: number;
-  toggleState(id: number): void,
-  updateTodo(id: number, title: string, description: string): void,
-  deleteTodo(id: number): void
+  toggleState(id: number, isDoneValue: boolean): void;
+  updateTodo(id: number, title: string, description: string): void;
+  deleteTodo(id: number): void;
+  setModalActiveTwo: React.Dispatch<React.SetStateAction<boolean>>;
+  setChangeTitle: React.Dispatch<React.SetStateAction<string>>;
+  setChangeDesc: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export const Todo: React.FC<TodoProps> = ({ todo, idx }) => {
+export const Todo: React.FC<TodoProps> = ({
+  todo,
+  toggleState,
+  deleteTodo,
+  setModalActiveTwo,
+  setChangeTitle,
+  setChangeDesc,
+}) => {
   return (
-    <li key={idx}>        
-      <input type="checkbox" />{" "}  {/* Повесить обработчик checkbox */}
-      <span >{`Activity name: ${todo.title}, Activity description: ${todo.description}`}</span> {/* Стили зачёркивания для true */}
-      <button className="update">&#9998;</button> {/* Повесить обработчик delete */}      
-      <button className="rm">&#10006;</button> {/* Повесить обработчик delete */}
+    <li>
+      <input
+        type="checkbox"
+        checked={todo.isDone}
+        onChange={() => toggleState(todo.id, todo.isDone)}
+      />{" "}
+      <span>{`Activity name: ${todo.title}, Activity description: ${todo.description}`}</span>{" "}
+      {/* Стили зачёркивания для true */}
+      <button
+        className="update"
+        onClick={() => {
+          setChangeTitle(todo.title);
+          setChangeDesc(todo.description);
+          setModalActiveTwo(true);
+        }}
+      >
+        &#9998;
+      </button>{" "}
+      {/* Повесить обработчик delete */}
+      <button className="rm" onClick={() => deleteTodo(todo.id)}>
+        &#10006;
+      </button>{" "}
+      {/* Повесить обработчик delete */}
     </li>
   );
 };
