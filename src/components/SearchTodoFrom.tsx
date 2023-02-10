@@ -1,5 +1,8 @@
 import React from "react";
 
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+
 interface SearchTodoFormProps {
   searchId: string;
   setSearchId: React.Dispatch<React.SetStateAction<string>>;
@@ -24,13 +27,14 @@ export const SearchTodoForm: React.FC<SearchTodoFormProps> = ({
   };
 
   return (
-    <form action="GET" onSubmit={submitSearchHendler}>
-      <input
-        type="number"
+    <Box component="form" onSubmit={submitSearchHendler}>
+      <TextField        
+        id="outlined-controlled"
+        label="Find by id"
+        type="number"        
         value={searchId || ""}
         onChange={changeSearchHandler}
       />
-      <input type="submit" />
-    </form>
+    </Box>
   );
 };
