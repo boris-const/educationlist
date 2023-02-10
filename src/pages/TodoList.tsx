@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 // import { styled } from "@mui/material";
 
 import { Modal } from "../components/Modal/Modal";
+import { SearchTodoForm } from "../components/SearchTodoFrom";
 import { Todo } from "../components/Todo";
 
 import { ITodo } from "../interfaces/todolist";
@@ -129,17 +130,7 @@ export const TodoList: React.FC = () => {
     }
   };
 
-  const changeSearchHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const target = event.target;
-    const value = target.value;
-    setSearchId(value);
-  };
-
-  const submitSearchHendler = async (event: React.FormEvent) => {
-    event.preventDefault();
-    await getTodo(searchId);
-    setSearchId("");
-  };
+  
 
   const changeAddTodoHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const target = event.target;
@@ -173,7 +164,7 @@ export const TodoList: React.FC = () => {
     }
   };
 
-  const changeSubmitHandler = async (event: React.FormEvent) => {
+  const changeTodoSubmitHandler = async (event: React.FormEvent) => {
     event.preventDefault();
     // await createTodo(changeTitle, changeDesc);
     await patchTodo(changeId, changeTitle, changeDesc);
@@ -187,14 +178,7 @@ export const TodoList: React.FC = () => {
     <>      
       <div className="todo_list">
         <div className="menu" style={{ display: "flex" }}>
-          <form action="GET" onSubmit={submitSearchHendler}>
-            <input
-              type="number"
-              value={searchId || ""}
-              onChange={changeSearchHandler}
-            />
-            <input type="submit" />
-          </form>
+          <SearchTodoForm searchId={searchId} setSearchId={setSearchId} getTodo={getTodo} />          
           <button
             style={{ marginLeft: "20px" }}
             onClick={() => setModalActive(true)}
@@ -235,7 +219,7 @@ export const TodoList: React.FC = () => {
         </Modal>
 
         <Modal modalActive={modalActiveTwo} setModalActive={setModalActiveTwo}>
-          <form action="#" onSubmit={changeSubmitHandler}>
+          <form action="#" onSubmit={changeTodoSubmitHandler}>
             <input
               name="title"
               type="text"
