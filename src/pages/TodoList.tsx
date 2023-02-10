@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Modal } from "../components/Modal/Modal";
+// import { styled } from "@mui/material";
 
+import { Modal } from "../components/Modal/Modal";
 import { Todo } from "../components/Todo";
 
 import { ITodo } from "../interfaces/todolist";
+
+
 
 export const TodoList: React.FC = () => {
   useEffect(() => {
@@ -181,7 +184,7 @@ export const TodoList: React.FC = () => {
   };
 
   return (
-    <>
+    <>      
       <div className="todo_list">
         <div className="menu" style={{ display: "flex" }}>
           <form action="GET" onSubmit={submitSearchHendler}>
