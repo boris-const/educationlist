@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { AddButton } from "../components/AddButton";
 // import { styled } from "@mui/material";
+
+import AddIcon from "@mui/icons-material/Add";
+import Button from "@mui/material/Button";
 
 import { Modal } from "../components/Modal/Modal";
 import { SearchTodoForm } from "../components/SearchTodoFrom";
 import { Todo } from "../components/Todo";
 
 import { ITodo } from "../interfaces/todolist";
-
-
 
 export const TodoList: React.FC = () => {
   useEffect(() => {
@@ -130,8 +132,6 @@ export const TodoList: React.FC = () => {
     }
   };
 
-  
-
   const changeAddTodoHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const target = event.target;
     const name = target.name;
@@ -175,22 +175,23 @@ export const TodoList: React.FC = () => {
   };
 
   return (
-    <>      
+    <>
       <div className="todo_list">
         <div className="menu" style={{ display: "flex" }}>
-          <SearchTodoForm searchId={searchId} setSearchId={setSearchId} getTodo={getTodo} />          
-          <button
-            style={{ marginLeft: "20px" }}
-            onClick={() => setModalActive(true)}
-          >
-            ADD
-          </button>
-          <button
-            onClick={() => deleteAllTodo()}
-            style={{ marginLeft: "40px" }}
-          >
+
+          <SearchTodoForm
+            searchId={searchId}
+            setSearchId={setSearchId}
+            getTodo={getTodo}
+          />
+          <Button variant="contained" onClick={() => setModalActive(true)}>
+            <AddIcon fontSize="large" />
+          </Button>
+
+          <Button variant="contained" onClick={() => deleteAllTodo()}>
             DELETE ALL
-          </button>
+          </Button>   
+                 
         </div>
 
         <Modal modalActive={modalActive} setModalActive={setModalActive}>
