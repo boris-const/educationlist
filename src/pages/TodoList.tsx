@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { AddButton } from "../components/AddButton";
 // import { styled } from "@mui/material";
 
 import AddIcon from "@mui/icons-material/Add";
 import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
 
 import { Modal } from "../components/Modal/Modal";
 import { SearchTodoForm } from "../components/SearchTodoFrom";
@@ -175,91 +175,81 @@ export const TodoList: React.FC = () => {
   };
 
   return (
-    <>
-      <div className="todo_list">
-        <div className="menu" style={{ display: "flex" }}>
+    <Box component="div">
+      <div className="menu" style={{ display: "flex" }}>
+        <SearchTodoForm
+          searchId={searchId}
+          setSearchId={setSearchId}
+          getTodo={getTodo}
+        />
+        <Button variant="contained" onClick={() => setModalActive(true)}>
+          <AddIcon fontSize="large" />
+        </Button>
 
-          <SearchTodoForm
-            searchId={searchId}
-            setSearchId={setSearchId}
-            getTodo={getTodo}
-          />
-          <Button variant="contained" onClick={() => setModalActive(true)}>
-            <AddIcon fontSize="large" />
-          </Button>
-
-          <Button variant="contained" onClick={() => deleteAllTodo()}>
-            DELETE ALL
-          </Button>   
-                 
-        </div>
-
-        <Modal modalActive={modalActive} setModalActive={setModalActive}>
-          <form action="#" onSubmit={submitAddTodoHandler}>
-            <input
-              name="title"
-              type="text"
-              value={newTodoTitle || ""}
-              style={{ display: "block", marginTop: "5px" }}
-              onChange={changeAddTodoHandler}
-            />
-            <input
-              name="description"
-              type="text"
-              value={newTodoDesc || ""}
-              style={{ display: "block", marginTop: "5px" }}
-              onChange={changeAddTodoHandler}
-            />
-            <button
-              type="submit"
-              style={{ display: "block", marginTop: "5px" }}
-            >
-              Create
-            </button>
-          </form>
-        </Modal>
-
-        <Modal modalActive={modalActiveTwo} setModalActive={setModalActiveTwo}>
-          <form action="#" onSubmit={changeTodoSubmitHandler}>
-            <input
-              name="title"
-              type="text"
-              value={changeTitle || ""}
-              style={{ display: "block", marginTop: "5px" }}
-              onChange={changeTodoHandler}
-            />
-            <input
-              name="description"
-              type="text"
-              value={changeDesc || ""}
-              style={{ display: "block", marginTop: "5px" }}
-              onChange={changeTodoHandler}
-            />
-            <button
-              type="submit"
-              style={{ display: "block", marginTop: "5px" }}
-            >
-              Create
-            </button>
-          </form>
-        </Modal>
-
-        <ol>
-          {todoArr.map((el, idx) => (
-            <Todo
-              key={idx}
-              todo={el}
-              toggleState={toggleState}
-              updateTodo={patchTodo}
-              deleteTodo={deleteTodo}
-              setModalActiveTwo={setModalActiveTwo}
-              setChangeTitle={setChangeTitle}
-              setChangeDesc={setChangeDesc}
-              setChangeId={setChangeId}
-            />
-          ))}
-        </ol>
+        <Button variant="contained" onClick={() => deleteAllTodo()}>
+          DELETE ALL
+        </Button>
       </div>
-    </>
+
+      <Modal modalActive={modalActive} setModalActive={setModalActive}>
+        <form action="#" onSubmit={submitAddTodoHandler}>
+          <input
+            name="title"
+            type="text"
+            value={newTodoTitle || ""}
+            style={{ display: "block", marginTop: "5px" }}
+            onChange={changeAddTodoHandler}
+          />
+          <input
+            name="description"
+            type="text"
+            value={newTodoDesc || ""}
+            style={{ display: "block", marginTop: "5px" }}
+            onChange={changeAddTodoHandler}
+          />
+          <button type="submit" style={{ display: "block", marginTop: "5px" }}>
+            Create
+          </button>
+        </form>
+      </Modal>
+
+      <Modal modalActive={modalActiveTwo} setModalActive={setModalActiveTwo}>
+        <form action="#" onSubmit={changeTodoSubmitHandler}>
+          <input
+            name="title"
+            type="text"
+            value={changeTitle || ""}
+            style={{ display: "block", marginTop: "5px" }}
+            onChange={changeTodoHandler}
+          />
+          <input
+            name="description"
+            type="text"
+            value={changeDesc || ""}
+            style={{ display: "block", marginTop: "5px" }}
+            onChange={changeTodoHandler}
+          />
+          <button type="submit" style={{ display: "block", marginTop: "5px" }}>
+            Create
+          </button>
+        </form>
+      </Modal>
+
+      <ol>
+        {todoArr.map((el, idx) => (
+          <Todo
+            key={idx}
+            todo={el}
+            toggleState={toggleState}
+            updateTodo={patchTodo}
+            deleteTodo={deleteTodo}
+            setModalActiveTwo={setModalActiveTwo}
+            setChangeTitle={setChangeTitle}
+            setChangeDesc={setChangeDesc}
+            setChangeId={setChangeId}
+          />
+        ))}
+      </ol>
+    </Box>
   );
 };
