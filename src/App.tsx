@@ -7,7 +7,7 @@ const App: React.FC = () => {
     <>
       <Navbar />
       <div className="container">
-        <TodoList />
+        {<TodoList />}
       </div>
     </>
   );
