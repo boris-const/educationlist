@@ -1,6 +1,5 @@
 import React from "react";
 
-import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
@@ -13,9 +12,10 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
+  width: 500,
   bgcolor: "background.paper",
-  border: "2px solid #000",
+  border: "2px solid #1565c0",
+  borderRadius: "10px",
   boxShadow: 24,
   p: 4,
 };
@@ -60,27 +60,20 @@ export const ModalAdd: React.FC<ModalAddProps> = ({
   };
 
   return (
-    <>
+    <div>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         open={modalActive}
         onClose={() => setModalActive(false)}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
+        closeAfterTransition        
       >
         <Fade in={modalActive}>
           <Box sx={style}>
-            <Typography id="transition-modal-title" variant="h6" component="h2">
-              Text in a modal
-            </Typography>
-            <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-            </Typography>
-            <Box component="form" onSubmit={submitAddTodoHandler}>
+            <Typography id="transition-modal-title" variant="h6" component="h2" align="center" sx={{marginBottom: "25px"}}>
+              Create todo element
+            </Typography>            
+            <Box component="form" onSubmit={submitAddTodoHandler} sx={{display: 'flex', justifyContent: "space-between" }}>
               <TextField
                 name="title"
                 type="text"
@@ -102,6 +95,6 @@ export const ModalAdd: React.FC<ModalAddProps> = ({
           </Box>
         </Fade>
       </Modal>
-    </>
+    </ div>
   );
 };

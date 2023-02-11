@@ -22,6 +22,7 @@ export const SearchTodoForm: React.FC<SearchTodoFormProps> = ({
 
   const submitSearchHendler = async (event: React.FormEvent) => {
     event.preventDefault();
+
     await getTodo(searchId);
     setSearchId("");
   };
