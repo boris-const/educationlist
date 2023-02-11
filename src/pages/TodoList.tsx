@@ -161,29 +161,22 @@ export const TodoList: React.FC = () => {
       <ModalAdd
         modalAddActive={modalAddActive}
         setModalAddActive={setModalAddActive}
-
         newTodoTitle={newTodoTitle}
         setNewTodoTitle={setNewTodoTitle}
-
         newTodoDesc={newTodoDesc}
         setNewTodoDesc={setNewTodoDesc}
-
         createTodo={createTodo}
       />
 
       <ModalChange
         modalChangeActive={modalChangeActive}
         setModalChangeActive={setModalChangeActive}
-
         changeTitle={changeTitle}
         setChangeTitle={setChangeTitle}
-
         changeDesc={changeDesc}
         setChangeDesc={setChangeDesc}
-
         changeId={changeId}
         setChangeId={setChangeId}
-
         patchTodo={patchTodo}
       />
 
