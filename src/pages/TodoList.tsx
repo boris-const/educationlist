@@ -68,9 +68,9 @@ export const TodoList: React.FC = () => {
     const url = `http://localhost:3100/getTodo/${numId}`;
     try {
       const response = await fetch(url);
-      const { data } = await response.json();
+      console.log(response.text())
       // console.log(data)
-      setTodoArr(data);
+      // setTodoArr(data);
     } catch (error) {
       console.log(error);
     }
