@@ -28,10 +28,11 @@ export const SearchTodoForm: React.FC<SearchTodoFormProps> = ({
 
   return (
     <Box component="form" onSubmit={submitSearchHendler}>
-      <TextField        
+      <TextField
+        fullWidth
         id="outlined-controlled"
         label="Find by id"
-        type="number"        
+        type="number"
         value={searchId || ""}
         onChange={changeSearchHandler}
       />

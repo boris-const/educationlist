@@ -1,5 +1,19 @@
 import React from "react";
+
+import Paper from "@mui/material/Paper";
+import Checkbox from "@mui/material/Checkbox";
+
 import { ITodo } from "../interfaces/todolist";
+
+import { styled } from "@mui/material/styles";
+
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: "center",
+  color: theme.palette.text.secondary,
+}));
 
 type TodoProps = {
   todo: ITodo;
@@ -22,12 +36,11 @@ export const Todo: React.FC<TodoProps> = ({
   setChangeId,
 }) => {
   return (
-    <li>
-      <input
-        type="checkbox"
+    <Item>
+      <Checkbox
         checked={todo.isDone}
         onChange={() => toggleState(todo.id, todo.isDone)}
-      />{" "}
+      />      
       <span>{`Activity ID: ${todo.id}, Activity name: ${todo.title}, Activity description: ${todo.description}`}</span>{" "}
       {/* Стили зачёркивания для true */}
       <button
@@ -46,6 +59,6 @@ export const Todo: React.FC<TodoProps> = ({
         &#10006;
       </button>{" "}
       {/* Повесить обработчик delete */}
-    </li>
+    </Item>
   );
 };

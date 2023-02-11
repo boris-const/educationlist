@@ -4,12 +4,14 @@ import React, { useEffect, useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
 
 import { Modal } from "../components/Modal/Modal";
 import { SearchTodoForm } from "../components/SearchTodoFrom";
 import { Todo } from "../components/Todo";
 
 import { ITodo } from "../interfaces/todolist";
+import { Grid } from "@mui/material";
 
 export const TodoList: React.FC = () => {
   useEffect(() => {
@@ -175,13 +177,19 @@ export const TodoList: React.FC = () => {
   };
 
   return (
-    <Box component="div">
-      <div className="menu" style={{ display: "flex" }}>
-        <SearchTodoForm
-          searchId={searchId}
-          setSearchId={setSearchId}
-          getTodo={getTodo}
-        />
+    <Box component="div" sx={{ width: "70vw", margin: "10vh auto 0" }}>
+      <Grid
+        container
+        style={{ display: "flex", justifyContent: "space-between" }}
+      >
+        <Grid xs={8}>
+          <SearchTodoForm
+            searchId={searchId}
+            setSearchId={setSearchId}
+            getTodo={getTodo}
+          />
+        </Grid>
+
         <Button variant="contained" onClick={() => setModalActive(true)}>
           <AddIcon fontSize="large" />
         </Button>
@@ -189,7 +197,7 @@ export const TodoList: React.FC = () => {
         <Button variant="contained" onClick={() => deleteAllTodo()}>
           DELETE ALL
         </Button>
-      </div>
+      </Grid>
 
       <Modal modalActive={modalActive} setModalActive={setModalActive}>
         <form action="#" onSubmit={submitAddTodoHandler}>
@@ -234,8 +242,7 @@ export const TodoList: React.FC = () => {
           </button>
         </form>
       </Modal>
-
-      <ol>
+      <Stack spacing={1} sx={{ paddingTop: "10px" }}>
         {todoArr.map((el, idx) => (
           <Todo
             key={idx}
@@ -249,7 +256,7 @@ export const TodoList: React.FC = () => {
             setChangeId={setChangeId}
           />
         ))}
-      </ol>
+      </Stack>
     </Box>
   );
 };
