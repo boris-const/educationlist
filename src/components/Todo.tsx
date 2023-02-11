@@ -53,7 +53,13 @@ export const Todo: React.FC<TodoProps> = ({
         />
       </Grid>
       <Grid>
-        <Typography>{`ID: ${todo.id}, Titile: ${todo.title}, Description: ${todo.description}`}</Typography>
+        <Typography
+          sx={
+            todo.isDone
+              ? { textDecoration: "line-through" }
+              : { textDecoration: "none" }
+          }
+        >{`ID: ${todo.id}, Titile: ${todo.title}, Description: ${todo.description}`}</Typography>
       </Grid>
       {/* Стили зачёркивания для true */}
       <Grid>
