@@ -7,11 +7,11 @@ import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Grid from "@mui/material/Grid";
 
-import { Modal } from "../components/Modal/Modal";
 import { SearchTodoForm } from "../components/SearchTodoFrom";
 import { Todo } from "../components/Todo";
 
 import { ITodo } from "../interfaces/todolist";
+import { ModalAdd } from "../components/ModalAdd";
 
 export const TodoList: React.FC = () => {
   useEffect(() => {
@@ -20,7 +20,7 @@ export const TodoList: React.FC = () => {
 
   const [todoArr, setTodoArr] = useState<ITodo[]>([]); // todoList
 
-  const [modalActive, setModalActive] = useState<boolean>(false);
+  const [modalActive, setModalActive] = useState<boolean>(false); // id 1
   const [newTodoTitle, setNewTodoTitle] = useState<string>("");
   const [newTodoDesc, setNewTodoDesc] = useState<string>("");
 
@@ -134,26 +134,6 @@ export const TodoList: React.FC = () => {
     }
   };
 
-  const changeAddTodoHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const target = event.target;
-    const name = target.name;
-    const value = target.value;
-    if (name === "title") {
-      setNewTodoTitle(value);
-    }
-    if (name === "description") {
-      setNewTodoDesc(value);
-    }
-  };
-
-  const submitAddTodoHandler = async (event: React.FormEvent) => {
-    event.preventDefault();
-    await createTodo(newTodoTitle, newTodoDesc);
-    setNewTodoTitle("");
-    setNewTodoDesc("");
-    setModalActive(false);
-  };
-
   const changeTodoHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const target = event.target;
     const name = target.name;
@@ -199,29 +179,17 @@ export const TodoList: React.FC = () => {
         </Button>
       </Grid>
 
-      <Modal modalActive={modalActive} setModalActive={setModalActive}>
-        <form action="#" onSubmit={submitAddTodoHandler}>
-          <input
-            name="title"
-            type="text"
-            value={newTodoTitle || ""}
-            style={{ display: "block", marginTop: "5px" }}
-            onChange={changeAddTodoHandler}
-          />
-          <input
-            name="description"
-            type="text"
-            value={newTodoDesc || ""}
-            style={{ display: "block", marginTop: "5px" }}
-            onChange={changeAddTodoHandler}
-          />
-          <button type="submit" style={{ display: "block", marginTop: "5px" }}>
-            Create
-          </button>
-        </form>
-      </Modal>
+      <ModalAdd
+        modalActive={modalActive}
+        setModalActive={setModalActive}
+        newTodoTitle={newTodoTitle}
+        setNewTodoTitle={setNewTodoTitle}
+        newTodoDesc={newTodoDesc}
+        setNewTodoDesc={setNewTodoDesc}
+        createTodo={createTodo}
+      />
 
-      <Modal modalActive={modalActiveTwo} setModalActive={setModalActiveTwo}>
+      {/* <Modal modalActive={modalActiveTwo} setModalActive={setModalActiveTwo}>
         <form action="#" onSubmit={changeTodoSubmitHandler}>
           <input
             name="title"
@@ -241,7 +209,7 @@ export const TodoList: React.FC = () => {
             Create
           </button>
         </form>
-      </Modal>
+      </Modal> */}
       <Stack spacing={1} sx={{ paddingTop: "10px" }}>
         {todoArr.map((el, idx) => (
           <Todo

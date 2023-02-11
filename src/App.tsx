@@ -4,8 +4,7 @@ import { TodoList } from "./pages/TodoList";
 
 const App: React.FC = () => {
   return (
-    <div className="wrapper">
-      
+    <div className="wrapper">      
       <TodoList />
     </div>
   );
