@@ -21,8 +21,8 @@ const style = {
 };
 
 interface ModalAddProps {
-  modalActive: boolean;
-  setModalActive: React.Dispatch<React.SetStateAction<boolean>>;
+  modalAddActive: boolean;
+  setModalAddActive: React.Dispatch<React.SetStateAction<boolean>>;
   newTodoTitle: string;
   setNewTodoTitle: React.Dispatch<React.SetStateAction<string>>;
   newTodoDesc: string;
@@ -31,8 +31,8 @@ interface ModalAddProps {
 }
 
 export const ModalAdd: React.FC<ModalAddProps> = ({
-  modalActive,
-  setModalActive,
+  modalAddActive,
+  setModalAddActive,
   newTodoTitle,
   setNewTodoTitle,
   newTodoDesc,
@@ -56,7 +56,7 @@ export const ModalAdd: React.FC<ModalAddProps> = ({
     await createTodo(newTodoTitle, newTodoDesc);
     setNewTodoTitle("");
     setNewTodoDesc("");
-    setModalActive(false);
+    setModalAddActive(false);
   };
 
   return (
@@ -64,16 +64,26 @@ export const ModalAdd: React.FC<ModalAddProps> = ({
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
-        open={modalActive}
-        onClose={() => setModalActive(false)}
-        closeAfterTransition        
+        open={modalAddActive}
+        onClose={() => setModalAddActive(false)}
+        closeAfterTransition
       >
-        <Fade in={modalActive}>
+        <Fade in={modalAddActive}>
           <Box sx={style}>
-            <Typography id="transition-modal-title" variant="h6" component="h2" align="center" sx={{marginBottom: "25px"}}>
+            <Typography
+              id="transition-modal-title"
+              variant="h6"
+              component="h2"
+              align="center"
+              sx={{ marginBottom: "25px" }}
+            >
               Create todo element
-            </Typography>            
-            <Box component="form" onSubmit={submitAddTodoHandler} sx={{display: 'flex', justifyContent: "space-between" }}>
+            </Typography>
+            <Box
+              component="form"
+              onSubmit={submitAddTodoHandler}
+              sx={{ display: "flex", justifyContent: "space-between" }}
+            >
               <TextField
                 name="title"
                 type="text"
@@ -90,11 +100,13 @@ export const ModalAdd: React.FC<ModalAddProps> = ({
                 value={newTodoDesc || ""}
                 onChange={changeAddTodoHandler}
               />
-              <Button variant="contained" type="submit">Create</Button>
+              <Button variant="contained" type="submit">
+                Create
+              </Button>
             </Box>
           </Box>
         </Fade>
       </Modal>
-    </ div>
+    </div>
   );
 };

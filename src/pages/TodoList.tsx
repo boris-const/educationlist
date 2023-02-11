@@ -12,6 +12,7 @@ import { Todo } from "../components/Todo";
 
 import { ITodo } from "../interfaces/todolist";
 import { ModalAdd } from "../components/ModalAdd";
+import { ModalChange } from "../components/ModalChange";
 
 export const TodoList: React.FC = () => {
   useEffect(() => {
@@ -20,11 +21,11 @@ export const TodoList: React.FC = () => {
 
   const [todoArr, setTodoArr] = useState<ITodo[]>([]); // todoList
 
-  const [modalActive, setModalActive] = useState<boolean>(false); // id 1
+  const [modalAddActive, setModalAddActive] = useState<boolean>(false); // id 1
   const [newTodoTitle, setNewTodoTitle] = useState<string>("");
   const [newTodoDesc, setNewTodoDesc] = useState<string>("");
 
-  const [modalActiveTwo, setModalActiveTwo] = useState<boolean>(false);
+  const [modalChangeActive, setModalChangeActive] = useState<boolean>(false);
   const [changeTitle, setChangeTitle] = useState<string>("");
   const [changeDesc, setChangeDesc] = useState<string>("");
   const [changeId, setChangeId] = useState<number>(0);
@@ -134,28 +135,6 @@ export const TodoList: React.FC = () => {
     }
   };
 
-  const changeTodoHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const target = event.target;
-    const name = target.name;
-    const value = target.value;
-    if (name === "title") {
-      setChangeTitle(value);
-    }
-    if (name === "description") {
-      setChangeDesc(value);
-    }
-  };
-
-  const changeTodoSubmitHandler = async (event: React.FormEvent) => {
-    event.preventDefault();
-    // await createTodo(changeTitle, changeDesc);
-    await patchTodo(changeId, changeTitle, changeDesc);
-    setNewTodoTitle("");
-    setNewTodoDesc("");
-    setChangeId(0);
-    setModalActiveTwo(false);
-  };
-
   return (
     <Box component="div" sx={{ width: "70vw", margin: "10vh auto 0" }}>
       <Grid
@@ -170,7 +149,7 @@ export const TodoList: React.FC = () => {
           />
         </Grid>
 
-        <Button variant="contained" onClick={() => setModalActive(true)}>
+        <Button variant="contained" onClick={() => setModalAddActive(true)}>
           <AddIcon fontSize="large" />
         </Button>
 
@@ -180,36 +159,34 @@ export const TodoList: React.FC = () => {
       </Grid>
 
       <ModalAdd
-        modalActive={modalActive}
-        setModalActive={setModalActive}
+        modalAddActive={modalAddActive}
+        setModalAddActive={setModalAddActive}
+
         newTodoTitle={newTodoTitle}
         setNewTodoTitle={setNewTodoTitle}
+
         newTodoDesc={newTodoDesc}
         setNewTodoDesc={setNewTodoDesc}
+
         createTodo={createTodo}
       />
 
-      {/* <Modal modalActive={modalActiveTwo} setModalActive={setModalActiveTwo}>
-        <form action="#" onSubmit={changeTodoSubmitHandler}>
-          <input
-            name="title"
-            type="text"
-            value={changeTitle || ""}
-            style={{ display: "block", marginTop: "5px" }}
-            onChange={changeTodoHandler}
-          />
-          <input
-            name="description"
-            type="text"
-            value={changeDesc || ""}
-            style={{ display: "block", marginTop: "5px" }}
-            onChange={changeTodoHandler}
-          />
-          <button type="submit" style={{ display: "block", marginTop: "5px" }}>
-            Create
-          </button>
-        </form>
-      </Modal> */}
+      <ModalChange
+        modalChangeActive={modalChangeActive}
+        setModalChangeActive={setModalChangeActive}
+
+        changeTitle={changeTitle}
+        setChangeTitle={setChangeTitle}
+
+        changeDesc={changeDesc}
+        setChangeDesc={setChangeDesc}
+
+        changeId={changeId}
+        setChangeId={setChangeId}
+
+        patchTodo={patchTodo}
+      />
+
       <Stack spacing={1} sx={{ paddingTop: "10px" }}>
         {todoArr.map((el, idx) => (
           <Todo
@@ -218,7 +195,7 @@ export const TodoList: React.FC = () => {
             toggleState={toggleState}
             updateTodo={patchTodo}
             deleteTodo={deleteTodo}
-            setModalActiveTwo={setModalActiveTwo}
+            setModalChangeActive={setModalChangeActive}
             setChangeTitle={setChangeTitle}
             setChangeDesc={setChangeDesc}
             setChangeId={setChangeId}

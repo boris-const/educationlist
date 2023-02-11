@@ -23,7 +23,7 @@ type TodoProps = {
   toggleState(id: number, isDoneValue: boolean): void;
   updateTodo(id: number, title: string, description: string): void;
   deleteTodo(id: number): void;
-  setModalActiveTwo: React.Dispatch<React.SetStateAction<boolean>>;
+  setModalChangeActive: React.Dispatch<React.SetStateAction<boolean>>;
   setChangeTitle: React.Dispatch<React.SetStateAction<string>>;
   setChangeDesc: React.Dispatch<React.SetStateAction<string>>;
   setChangeId: React.Dispatch<React.SetStateAction<number>>;
@@ -33,7 +33,7 @@ export const Todo: React.FC<TodoProps> = ({
   todo,
   toggleState,
   deleteTodo,
-  setModalActiveTwo,
+  setModalChangeActive,
   setChangeTitle,
   setChangeDesc,
   setChangeId,
@@ -65,7 +65,7 @@ export const Todo: React.FC<TodoProps> = ({
             setChangeTitle(todo.title);
             setChangeDesc(todo.description);
             setChangeId(todo.id);
-            setModalActiveTwo(true);
+            setModalChangeActive(true);
           }}
         >
           &#9998;
