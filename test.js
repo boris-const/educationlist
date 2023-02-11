@@ -1,1 +1,0 @@
-const hell = 24;
