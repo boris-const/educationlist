@@ -5,13 +5,13 @@ import AddIcon from "@mui/icons-material/Add";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
+import Grid from "@mui/material/Grid";
 
 import { Modal } from "../components/Modal/Modal";
 import { SearchTodoForm } from "../components/SearchTodoFrom";
 import { Todo } from "../components/Todo";
 
 import { ITodo } from "../interfaces/todolist";
-import { Grid } from "@mui/material";
 
 export const TodoList: React.FC = () => {
   useEffect(() => {
